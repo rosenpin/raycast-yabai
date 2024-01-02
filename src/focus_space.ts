@@ -1,7 +1,7 @@
-import { showHUD } from "@raycast/api";
+import { LaunchProps, showHUD } from "@raycast/api";
 import { execYabaiCommand } from './utils';
 
-export default async function main(args: { arguments: { spaceIndex: string } }) {
+export default async function main(args: LaunchProps) {
     console.log(args.arguments.spaceIndex);
     const spaceIndex = parseInt(args.arguments.spaceIndex, 10);
     if (isNaN(spaceIndex)) {
