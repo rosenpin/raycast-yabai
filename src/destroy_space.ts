@@ -1,25 +1,20 @@
 import { showHUD } from "@raycast/api";
 import { exec } from "child_process";
-import os from "os";
 import { promisify } from "util";
+import { execYabaiCommand } from "./utils";
 
 const execAsync = promisify(exec);
 
 export default async function main() {
   try {
-    // Get current user's username
-    const username = os.userInfo().username;
-
-    // Determine yabai path based on CPU architecture
-    const yabaiPath = process.arch === "arm64" ? "/opt/homebrew/bin/yabai" : "/usr/local/bin/yabai";
-
     // Create a new space
-    await execAsync(`${yabaiPath} -m space --destroy`, { env: { ...process.env, USER: username } });
-    // Show HUD notification
-    await showHUD(`Destroyed Space`);
-    await execAsync(`${yabaiPath} -m space --focus recent`, { env: { ...process.env, USER: username } });
+    await execYabaiCommand(`-m space --destroy`, (error, stdout, stderr) => {
+      // Show HUD notification
+      showHUD(`Destroyed Space`);
+      execYabaiCommand(`-m space --focus recent`);
+    });
   } catch (error) {
     console.error("Error executing yabai commands", error);
-    await showHUD(`Error: ${error.message}`);
+    await showHUD(`Error: ${error}`);
   }
 }
