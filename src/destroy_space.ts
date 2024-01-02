@@ -3,8 +3,6 @@ import { exec } from "child_process";
 import { promisify } from "util";
 import { execYabaiCommand } from "./utils";
 
-const execAsync = promisify(exec);
-
 export default async function main() {
   try {
     // Create a new space
