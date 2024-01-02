@@ -25,7 +25,7 @@ export default async function main() {
     await execAsync(`${yabaiPath} -m space --focus ${lastSpaceIndex}`, { env: { ...process.env, USER: username } });
 
     // Show HUD notification
-    await showHUD(`Focused space index: ${lastSpaceIndex}`);
+    await showHUD(`Created space: ${lastSpaceIndex}`);
   } catch (error) {
     console.error("Error executing yabai commands", error);
     await showHUD(`Error: ${error.message}`);
